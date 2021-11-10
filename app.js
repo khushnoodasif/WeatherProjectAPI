@@ -9,13 +9,20 @@ app.get('/', function(req, res) {
 
       response.on("data", function(data) {
          const weatherData = JSON.parse(data);
-         console.log(weatherData);
+         const temp = weatherData.main.temp;
+         const description = weatherData.weather[0].description;
+         const icon = weatherData.weather[0].icon;
+         const iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
+
+         res.write("<h1>For Weather in London.</h1>");
+         res.write("<p>Temperature: " + temp + " C</p>");
+         res.write("<p>Description: " + description + "</p>");
+         res.write("<img src='" + iconUrl + "'>");
+         res.send();
       });
    });
-
-   res.send("Hello World");
-});
+})
 
 app.listen(3000, function () {
       console.log("Server started on port 3000");
-}); 
+});
